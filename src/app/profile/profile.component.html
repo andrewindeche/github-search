@@ -1,0 +1,72 @@
+<div class="container">
+  <form #searchField="ngForm">
+    <div class="form-group" style="display: flex">
+      <input [(ngModel)]="username" #user="ngModel" type="search" placeholder="Type Username & Press Enter on Keyboard"
+        name="username" class="form-control"  style="border-radius: 5; width:100%; height: 80px;border-color: #000" required>
+      <button (click)="searchUser()" type="submit" class="btn btn-outline-clear btn-hov"
+        style="border-left-style: none; border-radius: 0"><i></i></button>
+    </div>
+      </form>
+     <div class="row">
+       <div class="col-lg-6">
+         <div class="sticky-top s-top" *ngIf="Profile">
+                   <div class="card no-border mb-12" style="max-width: 100em;">
+             <div class="row no-gutters">
+               <div class="col-md-12">
+                 <img src="{{ Profile.avatar_url}}" class="img-fluid" alt="avatar" Id='avatar'>
+               </div>
+               <div class="col-md-8">
+                 <div class="card-body">
+                   <h5 class="card-title">{{ Profile.name }} <a class="redirect" href="{{ Profile.html_url }}"
+                       target="_blank"><i class="fab fa-github"></i></a></h5>
+                   <p class="card-text"><span class="text-muted">Username:</span> {{ Profile.login }}</p>
+                   <p *ngIf="Profile.bio" class="card-text"><span class="text-muted">Bio:</span> {{ Profile.bio }}
+                   </p>
+                   <p class="card-text"><span class="text-muted">Joined:</span>
+                     {{ Profile.created_at | date}}</p>
+                   <p *ngIf="Profile.location" class="card-text"><i class="fas fa-map-marker-alt"></i>
+                     {{ Profile.location }}</p>
+                     <div class="badges">
+                     <a style="color:rgb(253, 244, 220);" class="btn btn-dark btn-sm space">
+                       Repositories <span style="background-color:rgb(253, 244, 220);"
+                         class="badge badge-light">{{ Profile.public_repos }}</span>
+                     </a>
+                     <a style="color:rgb(253, 244, 220);" class="btn btn-dark btn-sm space">
+                       Followers <span style="background-color:rgb(253, 244, 220);"
+                         class="badge badge-light">{{ Profile.followers }}</span>
+                     </a>
+                     <a style="color:rgb(253, 244, 220);" class="btn btn-dark btn-sm space">
+                       Following <span style="background-color:rgb(253, 244, 220);"
+                         class="badge badge-light">{{ Profile.following }}</span>
+                     </a>
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+       <div class="col-lg-6">
+          <div class="tab-content" id="nav-tabContent">
+           <div class="tab-pane fade show active" id="repos" role="tabpanel" aria-labelledby="nav-home-tab">
+             <div *ngFor="let repo of repository; index as i">
+               <div appCardHover class="card bottom-space">
+                 <div class="card-body">
+                   <h3>{{ repo.name }} <i *ngIf="repo.fork" class="fas fa-code-branch fa-xs"></i> <span
+                       style="font-size:12px; float:right; color:rgb(253, 244, 220); background-color: #393c40"
+                       class="badge badge-secondary">{{ repo.language }}</span></h3>
+                   <p>{{ repo.description }}</p>
+                   <a href="{{ repo.html_url }}" target="_blank">
+                     <button style="color:rgb(253, 244, 220);" class="btn btn-dark">GitHub <i
+                         class="fab fa-github"></i></button>
+                   </a>
+                   <div class="date">
+                     <small><span class="text-muted">last modified:</span> {{ repo.updated_at | date }}</small>
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </div>
+        </div>
+       </div>
+     </div>
